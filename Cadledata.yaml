@@ -1,0 +1,72 @@
+openapi: 3.1.0
+info:
+  title: Twelve Data DXY OHLC API
+  version: 1.0.0
+  description: Fetch candlestick (OHLC) data for DXY from Twelve Data for intermarket SMT confluence.
+
+servers:
+  - url: https://api.twelvedata.com
+    description: Twelve Data API server
+
+paths:
+  /time_series:
+    get:
+      operationId: getDxyCandles
+      summary: Get candlestick data (OHLC) for DXY
+      description: Fetch recent candlestick data (5m, 15m, 1h, etc.) for the US Dollar Index (DXY) from Twelve Data.
+      parameters:
+        - name: symbol
+          in: query
+          required: true
+          example: DXY
+          schema:
+            type: string
+        - name: interval
+          in: query
+          required: true
+          example: 5min
+          schema:
+            type: string
+        - name: outputsize
+          in: query
+          required: false
+          example: 10
+          schema:
+            type: integer
+        - name: apikey
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OHLC candlestick data for DXY
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  meta:
+                    type: object
+                    properties:
+                      symbol:
+                        type: string
+                      interval:
+                        type: string
+                  values:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        datetime:
+                          type: string
+                        open:
+                          type: string
+                        high:
+                          type: string
+                        low:
+                          type: string
+                        close:
+                          type: string
+                        volume:
+                          type: string
