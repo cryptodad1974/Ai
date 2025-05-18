@@ -1,0 +1,40 @@
+openapi: 3.1.0
+info:
+  title: Twelve Data DXY API
+  version: 1.0.0
+  description: Fetch real-time DXY index data from Twelve Data for intermarket confluence in ICT trading.
+
+servers:
+  - url: https://api.twelvedata.com
+    description: Twelve Data API
+
+paths:
+  /price:
+    get:
+      operationId: getDxyPrice
+      summary: Get real-time DXY price
+      description: Retrieves the current value of the US Dollar Index (DXY).
+      parameters:
+        - name: symbol
+          in: query
+          required: true
+          example: DXY
+          schema:
+            type: string
+        - name: apikey
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: DXY price response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  price:
+                    type: string
+                  symbol:
+                    type: string
